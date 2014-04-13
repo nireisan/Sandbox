@@ -40,7 +40,8 @@
         appFiles:[
             'src/resource.js',
             'src/myApp.js',//add your own files in order here
-            'src/sample.js'
+            'src/sample.js',
+            'src/result.js'
         ]
     };
 

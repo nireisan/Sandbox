@@ -16,6 +16,10 @@
         enemy.v = cc.p(-5, (Math.random() - 0.5) * 3);
         enemy.setColor(cc.c3b(255, 0, 0));
         enemy.setPosition(cc.p((Math.random() + 1) * size.width, Math.random() * size.height));
+        this.scoreLabel = cc.LabelTTF.create("", "Arial", 17);
+        this.scoreLabel.setPosition(cc.p(20, size.height - 20));
+        this.scoreLabel.setAnchorPoint(cc.p(0, 1));
+        this.addChild(this.scoreLabel, 10);
         this.addChild(enemy, 10);
         this.enemies.push(enemy);
       }
@@ -51,17 +55,26 @@
         distance = cc.pDistance(shipPos, pos);
         if (distance < 25) {
           cc.log('hit');
+          if (!this.gameover) {
+            this.gameover = true;
+            this.onGameover();
+          }
         }
-        _results.push(enemy.setPosition(pos));
+        enemy.setPosition(pos);
+        _results.push(this.scoreLabel.setString("SCORE: " + g.score++));
       }
       return _results;
     },
+    onGameover: function() {
+      var transition;
+      transition = cc.TransitionFade.create(1.0, new ResultScene());
+      console.log("replaceScene");
+      cc.Director.getInstance().replaceScene(transition);
+    },
     onTouchesBegan: function(touches, event) {
-      console.log(touches[0].getLocation());
       this.touched = touches[0].getLocation();
     },
     onTouchesMoved: function(touches, event) {
-      console.log(touches[0].getLocation());
       this.touched = touches[0].getLocation();
     },
     onTouchesEnded: function(touches, event) {

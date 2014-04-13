@@ -16,6 +16,11 @@ Sample = cc.Layer.extend(
       enemy.setColor cc.c3b 255, 0, 0
       enemy.setPosition cc.p (Math.random() + 1) * size.width, Math.random() * size.height
 
+      @scoreLabel = cc.LabelTTF.create "", "Arial", 17
+      @scoreLabel.setPosition cc.p 20, size.height - 20
+      @scoreLabel.setAnchorPoint cc.p 0, 1
+      @addChild @scoreLabel, 10
+
       @addChild enemy, 10
       @enemies.push enemy
 
@@ -48,17 +53,27 @@ Sample = cc.Layer.extend(
       distance = cc.pDistance shipPos, pos
       if distance < 25
         cc.log 'hit'
+        unless @gameover
+          @gameover = true;
+          @onGameover()
 
       enemy.setPosition pos
+      @scoreLabel.setString "SCORE: " + g.score++
+
+  onGameover: ->
+    transition = cc.TransitionFade.create 1.0, new ResultScene()
+    console.log "replaceScene"
+    cc.Director.getInstance().replaceScene transition
+    return
 
   onTouchesBegan: (touches, event) ->
-    console.log touches[0].getLocation()
+#    console.log touches[0].getLocation()
     @touched = touches[0].getLocation()
     return
 
 
   onTouchesMoved: (touches, event) ->
-    console.log touches[0].getLocation()
+#    console.log touches[0].getLocation()
     @touched = touches[0].getLocation()
     return
 
