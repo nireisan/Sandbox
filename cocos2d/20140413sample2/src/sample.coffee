@@ -4,7 +4,8 @@ Sample = cc.Layer.extend(
     @_super()
     size = cc.Director.getInstance().getWinSize()
 
-    @ship = cc.LabelTTF.create "=>", "Arial", 38
+#    @ship = cc.LabelTTF.create "=>", "Arial", 38
+    @ship = cc.Sprite.create "res/CloseSelected.png"
     @ship.setPosition cc.p size.width / 2, size.height / 2
     @addChild @ship, 5
 
