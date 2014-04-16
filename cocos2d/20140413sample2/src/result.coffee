@@ -12,12 +12,9 @@ Result = cc.Layer.extend(
     @addChild resultLabel
 
     highScore = parseInt sys.localStorage.getItem("Sample/highScore") || 0
-    console.log g.score
-    console.log highScore
     if g.score > highScore
-      console.log "high score"
-#todo highScoreには値あるけど入らない(´・ω・｀) 今度調べる
-      sys.localStorage.setItem "Sample/highScore", highScore
+      highScore = g.score
+      sys.localStorage.setItem("Sample/highScore", highScore)
     highLabel = cc.LabelTTF.create "high score: " + highScore, "Arial", 20
     highLabel.setPosition cc.p size.width / 2, size.height / 2 - 50
     @addChild highLabel
